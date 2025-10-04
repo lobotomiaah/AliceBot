@@ -16,7 +16,7 @@ async def on_ready():
 
 async def load_commands():
     for filename in os.listdir("C:\\Users\\lobotomia\\Downloads\\AliceBot\\commands"):
-        if filename.endswith(".py"):
+        if filename.endswith(".py") and filename != "__init__.py":
             await bot.load_extension(f"commands.{filename[:-3]}")
             print(f"✔ Comando {filename} carregado!")
 
