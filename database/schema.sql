@@ -1,10 +1,9 @@
-
-Create TABLE fichas(
-    id INTEGER PRIMARY KEY AUNTOINCREMENT,
-    usuario_id TEXT NOT NULL,
+CREATE TABLE IF NOT EXISTS fichas (
+    usuario_id INTEGER NOT NULL,
     nome TEXT NOT NULL,
-    persona TEXT NOT NULL
+    persona TEXT NOT NULL,
     classe TEXT NOT NULL,
-    nivel INTEGER    
-    xp INTEGER
-)
+    nivel INTEGER DEFAULT 1,
+    xp INTEGER DEFAULT 0,
+    PRIMARY KEY (usuario_id, nome)
+);
