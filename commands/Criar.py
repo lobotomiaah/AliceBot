@@ -33,9 +33,9 @@ class Personagens(commands.Cog):
         conn.close()
 
     @commands.command(name="criar_ficha")
-    async def criar_ficha(self, ctx, nome: str, classe: str, persona: str):
+    async def criar_ficha(self, ctx, nome: str, classe: str, Zanpakutō: str, rank:str):
         if not nome or not classe or not persona:
-            await ctx.reply("Uso: `.criar_ficha <nome> <classe> <persona>`")
+            await ctx.reply("Uso: `.criar_ficha <nome> <classe> <Zanpakutō> <rank>`")
             return
 
         if nome.strip().isdigit():
@@ -51,7 +51,7 @@ class Personagens(commands.Cog):
             conn = get_connection()
             cursor = conn.cursor()
             cursor.execute(
-                "INSERT INTO fichas (usuario_id, nome, classe, persona) VALUES (?, ?, ?, ?)",
+                "INSERT INTO fichas (usuario_id, nome, classe, Zanpakutō, rank) VALUES (?, ?, ?, ?, ?)",
                 (ctx.author.id, nome.strip(), classe.strip(), persona.strip())
             )
             conn.commit()
@@ -70,7 +70,7 @@ class Personagens(commands.Cog):
     @criar_ficha.error
     async def criar_ficha_error(self, ctx, error):
         if isinstance(error, commands.MissingRequiredArgument):
-            await ctx.reply("Uso correto: `.criar_ficha <nome> <classe> <persona>`\nExemplo: `.criar_ficha Alice Arqueira Aeon`")
+            await ctx.reply("Uso correto: `.criar_ficha <nome> <classe> <Zanpakutō> <rank>`\nExemplo: `.criar_ficha Alice shinigami zangetsu tenente`")
         else:
             await ctx.reply(f"Erro ao processar o comando:\n```{error}```")
 
