@@ -4,7 +4,7 @@ import re
 from discord.ext import commands
 
 DB_DIR = "database"
-DB_PATH = os.path.join(DB_DIR, "rpg.db")
+DB_PATH = os.path.join(DB_DIR, "fichas.db")
 
 def get_connection():
     os.makedirs(DB_DIR, exist_ok=True)
@@ -22,6 +22,7 @@ class Personagens(commands.Cog):
             CREATE TABLE IF NOT EXISTS fichas (
                 usuario_id INTEGER,
                 nome TEXT,
+                rank TEXT,
                 classe TEXT,
                 persona TEXT,
                 nivel INTEGER DEFAULT 1,
@@ -33,16 +34,16 @@ class Personagens(commands.Cog):
         conn.close()
 
     @commands.command(name="criar_ficha")
-    async def criar_ficha(self, ctx, nome: str, classe: str, Zanpakutō: str, rank:str):
+    async def criar_ficha(self, ctx, nome: str, classe: str, persona: str, rank:str):
         if not nome or not classe or not persona:
-            await ctx.reply("Uso: `.criar_ficha <nome> <classe> <Zanpakutō> <rank>`")
+            await ctx.reply("Uso: `.criar_ficha <nome> <classe> <zanpakuto> <rank>`")
             return
 
         if nome.strip().isdigit():
             await ctx.reply("Erro: o nome não pode ser apenas números.")
             return
 
-        if len(nome) > 50 or len(classe) > 30 or len(persona) > 30:
+        if len(nome) > 50 or len(classe) > 30 or len(persona) > 30 or len(rank) > 14:
             await ctx.reply("Erro: nome/classe/persona muito longos.")
             return
 
@@ -51,8 +52,8 @@ class Personagens(commands.Cog):
             conn = get_connection()
             cursor = conn.cursor()
             cursor.execute(
-                "INSERT INTO fichas (usuario_id, nome, classe, Zanpakutō, rank) VALUES (?, ?, ?, ?, ?)",
-                (ctx.author.id, nome.strip(), classe.strip(), persona.strip())
+                "INSERT INTO fichas (usuario_id, nome, classe, persona, rank) VALUES (?, ?, ?, ?, ?)",
+                (ctx.author.id, nome.strip(), classe.strip(), persona.strip(), rank.strip())
             )
             conn.commit()
             await ctx.reply(f"Personagem **{nome}** criado com sucesso! (Nível: 1, XP: 0)")
