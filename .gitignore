@@ -1,6 +1,6 @@
 # Arquivo de variáveis de ambiente
 .env
-
+.env.txt
 # Cache do Python
 __pycache__/
 *.pyc
