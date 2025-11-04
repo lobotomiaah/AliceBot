@@ -10,7 +10,7 @@ class Calculator(commands.Cog):
         if not operacao or not num1 or not num2:
             await ctx.reply("Uso correto: `.calc <operacao> <num1> <num2>`\nExemplo: `.calc soma 10 5`")
             return
-
+        
       
         try:
             num1 = float(num1.replace(",", "."))
